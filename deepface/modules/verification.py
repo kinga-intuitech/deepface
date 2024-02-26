@@ -76,6 +76,8 @@ def verify(
             - 'img2': {'x': int, 'y': int, 'w': int, 'h': int}
                     Region of interest for the second image.
 
+        - 'face_embeddings' (dict): The face embedding of the first and the second image.
+
         - 'time' (float): Time taken for the verification process in seconds.
     """
 
@@ -108,6 +110,8 @@ def verify(
     # --------------------------------
     distances = []
     regions = []
+    img1_representation = None
+    img2_representation = None
     # now we will find the face pair with minimum distance
     for img1_obj in img1_objs:
         img1_content = img1_obj["face"]
@@ -166,6 +170,7 @@ def verify(
         "detector_backend": detector_backend,
         "similarity_metric": distance_metric,
         "facial_areas": {"img1": facial_areas[0], "img2": facial_areas[1]},
+        "face_embedding": {"img1": img1_representation, "img2": img2_representation},
         "time": round(toc - tic, 2),
     }
 
